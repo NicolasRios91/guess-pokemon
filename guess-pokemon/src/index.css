@@ -9,4 +9,21 @@ main {
 
 img {
   image-rendering: pixelated;
+  filter: brightness(0.15);
+  width: 300px;
+}
+
+.show-pokemon {
+  filter: brightness();
+  animation-name: revealPokemon;
+  animation-duration: 4s;
+}
+
+@keyframes revealPokemon {
+  0% {
+    filter: brightness(0.15);
+  }
+  100% {
+    filter: brightness(1);
+  }
 }
