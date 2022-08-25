@@ -3,11 +3,13 @@ import {useState, useEffect} from "react";
 import {Pokemon} from "./types";
 import api from "./api";
 import {theme} from "./utils";
+import {formatText} from "./utils/helpers";
 
 const App = () => {
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [showPokemon, setShowPokemon] = useState(false);
   const [searchValue, setSearchValue] = useState<string>("");
+  const msg = searchValue === pokemon?.name ? "Congratulations!!" : "Wrong Answer";
 
   const handleOnClick = () => {
     setShowPokemon(true);
@@ -19,6 +21,13 @@ const App = () => {
 
   return (
     <main>
+      <p
+        className={`${theme.tagType.text} ${
+          msg === "Congratulations!!" ? theme.status.success : theme.status.error
+        }`}
+      >
+        {showPokemon && msg}
+      </p>
       <p className={`${theme.tagType.text} ${theme.status.primary}`}>
         {showPokemon ? pokemon?.name : <br />}
       </p>
@@ -28,7 +37,7 @@ const App = () => {
           className={theme.tagType.input}
           id="guess-pokemon"
           type="text"
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={(e) => setSearchValue(formatText(e.target.value))}
         />
         <button className={theme.tagType.button} onClick={() => handleOnClick()}>
           Guess
