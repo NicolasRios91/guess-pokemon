@@ -6,17 +6,31 @@ main {
   flex-direction: column;
   padding: 24px;
 }
-
+.img_container {
+  margin: auto;
+  background-color: #ffffff;
+  border: 10px solid black;
+  border-radius: 10%;
+  margin-top: 20px;
+  padding: 40px 20px;
+  width: 70%;
+}
 img {
   image-rendering: pixelated;
   filter: brightness(0.15);
-  width: 300px;
+  width: 90%;
+  margin: 0px 10px;
 }
 
 .show-pokemon {
   filter: brightness();
   animation-name: revealPokemon;
   animation-duration: 4s;
+}
+
+p {
+  text-align: center;
+  color: #ffffff;
 }
 
 @keyframes revealPokemon {
