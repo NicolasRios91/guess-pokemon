@@ -15,7 +15,6 @@ const App = () => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [correctAnswers, setCorrectAnswers] = useState<number>(getInitialCorrectScore || 0);
   const [wrongAnswers, setWrongAnswers] = useState<number>(getInitialWrongScore || 0);
-  const [loading, setLoading] = useState(true);
 
   const msg = searchValue === pokemon?.name ? "Congratulations!!" : "Wrong Answer";
 
@@ -35,10 +34,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    api
-      .random()
-      .then((response) => setPokemon(response))
-      .finally(() => setLoading(false));
+    api.random().then((response) => setPokemon(response));
   }, []);
 
   return (
