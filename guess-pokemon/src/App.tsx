@@ -1,14 +1,25 @@
 import {useState, useEffect} from "react";
 
 import {Pokemon} from "./types";
-import api from "./api";
-import {theme} from "./utils";
+import api from "./api/api";
+import Button from "./components/button";
+import ButtonLeds from "./components/leds";
+import ImageScreen from "./components/image";
 import {formatText} from "./utils/helpers";
-import "./components/pokedex.css";
+import {
+  CLASS_NES_SELECT,
+  CLASS_NES_TEXT,
+  CLASS_NES_STATUS_SUCCESS,
+  CLASS_NES_STATUS_WARNING,
+  CORRECT_ANSWER_MESSAGE,
+  WRONG_ANSWER_MESSAGE,
+  CORRECT,
+  WRONG,
+} from "./utils/constants";
 
 const App = () => {
-  const getInitialCorrectScore = () => Number(localStorage.getItem("correct"));
-  const getInitialWrongScore = () => Number(localStorage.getItem("wrong"));
+  const getInitialCorrectScore = () => Number(localStorage.getItem(CORRECT));
+  const getInitialWrongScore = () => Number(localStorage.getItem(WRONG));
 
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [showPokemon, setShowPokemon] = useState(false);
@@ -16,18 +27,22 @@ const App = () => {
   const [correctAnswers, setCorrectAnswers] = useState<number>(getInitialCorrectScore || 0);
   const [wrongAnswers, setWrongAnswers] = useState<number>(getInitialWrongScore || 0);
 
-  const msg = searchValue === pokemon?.name ? "Congratulations!!" : "Wrong Answer";
+  const msg = searchValue === pokemon?.name ? CORRECT_ANSWER_MESSAGE : WRONG_ANSWER_MESSAGE;
 
-  const handleOnClick = () => {
+  const handleTryClick = () => {
     setShowPokemon(true);
     const isCorrect = searchValue === pokemon?.name;
 
-    isCorrect ? setCorrectAnswers(correctAnswers + 1) : setWrongAnswers(wrongAnswers + 1);
-    localStorage.setItem("correct", (correctAnswers + (isCorrect ? 1 : 0)).toString());
-    localStorage.setItem("wrong", (wrongAnswers + (!isCorrect ? 1 : 0)).toString());
+    if (isCorrect) {
+      setCorrectAnswers(correctAnswers + 1);
+      localStorage.setItem(CORRECT, (correctAnswers + 1).toString());
+    } else {
+      setWrongAnswers(wrongAnswers + 1);
+      localStorage.setItem(WRONG, (wrongAnswers + 1).toString());
+    }
   };
 
-  const handlePlayAgain = () => {
+  const handlePlayAgainClick = () => {
     api.random().then((response) => setPokemon(response));
     setShowPokemon(false);
     setSearchValue("");
@@ -41,48 +56,31 @@ const App = () => {
     <main>
       <div className="container">
         <div className="podekex__left">
-          <div style={{display: "flex", alignItems: "center"}}>
-            <div className="green__circle" />
-            <div className="blue__circle" />
-          </div>
-          <div className="img_container">
-            <p
-              className={`${theme.tagType.text} ${theme.status.primary}`}
-              style={{textAlign: "center"}}
-            >
-              {showPokemon ? pokemon?.name : <br />}
-            </p>
-            <img className={showPokemon ? "show-pokemon" : ""} src={pokemon?.image} />
-          </div>
-          <div
-            style={{display: "flex", width: "400px", margin: "20px auto", justifyContent: "center"}}
-          >
+          <ButtonLeds />
+          <ImageScreen pokemon={pokemon} showPokemon={showPokemon} />
+          <div className="search__container">
             <input
-              className={theme.tagType.input}
+              aria-label="Insert search"
+              className={CLASS_NES_SELECT}
               id="guess-pokemon"
               placeholder="Insert search"
               type="text"
               value={searchValue}
               onChange={(e) => setSearchValue(formatText(e.target.value))}
             />
-
-            <button className={theme.tagType.button} onClick={() => handleOnClick()}>
-              Try
-            </button>
+            <Button aria-label="search pokemon" label="Try" onClick={handleTryClick} />
           </div>
-          <div style={{textAlign: "center"}}>
-            <button className={theme.tagType.button} onClick={() => handlePlayAgain()}>
-              Play again
-            </button>
+          <div style={{margin: "auto"}}>
+            <Button aria-label="Play Again" label="Play Again" onClick={handlePlayAgainClick} />
           </div>
-          <p>correct: {correctAnswers}</p>
+          <p style={{marginTop: "10px"}}>correct: {correctAnswers}</p>
           <p>incorrect: {wrongAnswers}</p>
           <p
-            className={`${theme.tagType.text} ${
-              msg === "Congratulations!!" ? theme.status.success : theme.status.warning
+            className={`${CLASS_NES_TEXT} ${
+              msg === CORRECT_ANSWER_MESSAGE ? CLASS_NES_STATUS_SUCCESS : CLASS_NES_STATUS_WARNING
             }`}
           >
-            {showPokemon && msg}
+            {showPokemon ? msg : <br />}
           </p>
         </div>
       </div>

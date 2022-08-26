@@ -6,38 +6,41 @@ main {
   flex-direction: column;
   padding: 24px;
 }
-.img_container {
-  margin: auto;
-  background-color: #ffffff;
-  border: 10px solid black;
-  border-radius: 10%;
-  margin-top: 20px;
-  padding: 40px 20px;
-  width: 70%;
-}
-img {
-  image-rendering: pixelated;
-  filter: brightness(0.15);
-  width: 90%;
-  margin: 0px 10px;
+
+.search__container {
+  display: flex;
+  width: 400px;
+  margin: 20px auto;
+  justify-content: center;
 }
 
-.show-pokemon {
-  filter: brightness();
-  animation-name: revealPokemon;
-  animation-duration: 4s;
+.container {
+  display: flex;
+  justify-content: center;
+  height: calc(100vh - 200px);
+  width: 80%;
+  box-sizing: border-box;
+}
+
+.podekex__left {
+  display: flex;
+  flex-direction: column;
+  border: 4px solid #000000;
+  border-radius: 10px;
+  padding-top: 20px;
+  box-sizing: border-box;
+  width: 49%;
+  height: 100%;
+  background: rgb(235, 17, 17);
+  background: linear-gradient(
+    180deg,
+    rgba(235, 17, 17, 1) 0%,
+    rgba(112, 5, 5, 1) 99%,
+    rgba(0, 0, 0, 1) 100%
+  );
 }
 
 p {
   text-align: center;
   color: #ffffff;
-}
-
-@keyframes revealPokemon {
-  0% {
-    filter: brightness(0.15);
-  }
-  100% {
-    filter: brightness(1);
-  }
 }
