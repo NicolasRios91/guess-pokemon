@@ -16,3 +16,7 @@ export interface ButtonProps {
   label: string;
   onClick: VoidFunction;
 }
+
+export interface ButtonLedsProps {
+  isCorrect: boolean | null;
+}

@@ -1,4 +1,6 @@
 .img_container {
+  display: flex;
+  flex-direction: column;
   margin: auto;
   background-color: #ffffff;
   border: 6px solid black;
@@ -6,23 +8,25 @@
   margin-top: 20px;
   padding: 40px 20px;
   width: 70%;
-  min-height: 350px;
 }
+
+.img_container > p {
+  text-align: "center";
+  margin-bottom: 0px;
+}
+
 img {
-  image-rendering: pixelated;
   filter: brightness(0.15);
-  width: 90%;
-  margin: 0px 10px;
+  width: 70%;
+  margin: 0px auto;
+  height: auto;
+  image-rendering: pixelated;
 }
 
 .show-pokemon {
-  filter: brightness();
+  filter: brightness(1);
   animation-name: revealPokemon;
   animation-duration: 4s;
-}
-
-p {
-  text-align: "center";
 }
 
 @keyframes revealPokemon {

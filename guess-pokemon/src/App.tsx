@@ -27,7 +27,7 @@ const App = () => {
   const [correctAnswers, setCorrectAnswers] = useState<number>(getInitialCorrectScore || 0);
   const [wrongAnswers, setWrongAnswers] = useState<number>(getInitialWrongScore || 0);
 
-  const msg = searchValue === pokemon?.name ? CORRECT_ANSWER_MESSAGE : WRONG_ANSWER_MESSAGE;
+  const message = searchValue === pokemon?.name ? CORRECT_ANSWER_MESSAGE : WRONG_ANSWER_MESSAGE;
 
   const handleTryClick = () => {
     setShowPokemon(true);
@@ -56,7 +56,7 @@ const App = () => {
     <main>
       <div className="container">
         <div className="podekex__left">
-          <ButtonLeds />
+          <ButtonLeds isCorrect={message === CORRECT_ANSWER_MESSAGE && showPokemon} />
           <ImageScreen pokemon={pokemon} showPokemon={showPokemon} />
           <div className="search__container">
             <input
@@ -77,10 +77,12 @@ const App = () => {
           <p>incorrect: {wrongAnswers}</p>
           <p
             className={`${CLASS_NES_TEXT} ${
-              msg === CORRECT_ANSWER_MESSAGE ? CLASS_NES_STATUS_SUCCESS : CLASS_NES_STATUS_WARNING
+              message === CORRECT_ANSWER_MESSAGE
+                ? CLASS_NES_STATUS_SUCCESS
+                : CLASS_NES_STATUS_WARNING
             }`}
           >
-            {showPokemon ? msg : <br />}
+            {showPokemon ? message : <br />}
           </p>
         </div>
       </div>

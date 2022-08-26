@@ -2,24 +2,27 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  height: 100vh;
   flex-direction: column;
-  padding: 24px;
+  box-sizing: border-box;
+  margin: auto;
 }
 
 .search__container {
   display: flex;
-  width: 400px;
+  width: 70%;
   margin: 20px auto;
   justify-content: center;
 }
 
 .container {
+  margin: auto;
   display: flex;
   justify-content: center;
-  height: calc(100vh - 200px);
-  width: 80%;
+  width: 60%;
+  height: 80%;
   box-sizing: border-box;
+  padding: 24px;
 }
 
 .podekex__left {
